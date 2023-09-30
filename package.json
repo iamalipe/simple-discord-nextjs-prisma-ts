@@ -1,27 +1,51 @@
 {
   "name": "simple-discord-nextjs-prisma-ts",
+  "author": {
+    "name": "Abhiseck Bhattacharya",
+    "email": "Abhiseck@outlook.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "description": "A Simple Discord Clone build using Next-JS",
+  "homepage": "",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.25.1",
+    "@hookform/resolvers": "^3.3.1",
+    "@prisma/client": "^5.3.1",
+    "axios": "^1.5.1",
+    "clsx": "^2.0.0",
+    "imagekit": "^4.1.3",
+    "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "next": "latest"
+    "react-hook-form": "^7.46.2",
+    "tailwind-merge": "^1.14.0",
+    "uuid": "^9.0.1",
+    "zod": "^3.22.2",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
-    "typescript": "latest",
-    "@types/react": "latest",
     "@types/node": "latest",
+    "@types/react": "latest",
     "@types/react-dom": "latest",
     "autoprefixer": "latest",
-    "postcss": "latest",
-    "tailwindcss": "latest",
+    "daisyui": "^3.8.2",
     "eslint": "latest",
-    "eslint-config-next": "latest"
+    "eslint-config-next": "latest",
+    "postcss": "latest",
+    "prisma": "^5.3.1",
+    "tailwindcss": "latest",
+    "typescript": "latest"
   }
 }
