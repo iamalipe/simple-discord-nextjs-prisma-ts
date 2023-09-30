@@ -12,19 +12,19 @@ const allowedFileExtensions = [
   "tiff",
   "svg",
   // Videos
-  // "mp4",
-  // "avi",
-  // "mov",
-  // "mkv",
-  // "wmv",
-  // "flv",
-  // "webm",
+  "mp4",
+  "avi",
+  "mov",
+  "mkv",
+  "wmv",
+  "flv",
+  "webm",
   // Audio
-  // "mp3",
-  // "wav",
-  // "ogg",
-  // "aac",
-  // "flac",
+  "mp3",
+  "wav",
+  "ogg",
+  "aac",
+  "flac",
 ];
 
 interface ImageKitUploadParameters {

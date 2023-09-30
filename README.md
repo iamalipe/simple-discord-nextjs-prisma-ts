@@ -1,4 +1,6 @@
-# [simple-discord-nextjs-prisma-ts]()
+# [simple-discord-nextjs-prisma-ts](https://simple-discord-nextjs-prisma-ts.vercel.app)
+
+Simple Discord Clone. This not a production app, this only use for learning and testing.
 
 ## Hosted on [Vercel](https://vercel.com)
 

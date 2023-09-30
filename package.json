@@ -6,10 +6,10 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/iamalipe/simple-discord-nextjs-prisma-ts.git"
   },
   "description": "A Simple Discord Clone build using Next-JS",
-  "homepage": "",
+  "homepage": "https://simple-discord-nextjs-prisma-ts.vercel.app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
