@@ -1,11 +1,12 @@
-import './globals.css'
+import "./globals.css";
 
-import type { Metadata } from 'next'
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
 import { Footer } from "@/components/footer";
+import { RedixProvider, ToastProvider } from "@/components/provider";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -24,8 +25,11 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={cn(font.className, "flex flex-col overflow-hidden")}>
-          {children}
-          <Footer />
+          <RedixProvider>
+            {children}
+            <Footer />
+          </RedixProvider>
+          <ToastProvider />
         </body>
       </html>
     </ClerkProvider>
