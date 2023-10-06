@@ -2,14 +2,13 @@
 
 import { Plus } from "lucide-react";
 import * as Tooltip from "@radix-ui/react-tooltip";
-
-// import { useModal } from "@/hooks/use-modal-store";
+import { useModal } from "@/hooks/use-modal-store";
 
 export const ServerAdd = () => {
-  // const { onOpen } = useModal();
+  const { onOpen } = useModal();
 
   const onClick = () => {
-    // onOpen("createServer");
+    onOpen("createServer");
   };
 
   return (
