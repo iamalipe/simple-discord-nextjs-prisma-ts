@@ -21,6 +21,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { imageKitUpload } from "@/lib/image-kit-upload";
+import toast from "react-hot-toast";
 
 const MAX_FILE_SIZE = 500000;
 const ACCEPTED_IMAGE_TYPES = [
@@ -69,11 +70,11 @@ export const CreateServerModal = () => {
         fileName: "server1234",
         folder: "server",
       });
-      const serverRes = await axios.post("/api/servers", {
+      await axios.post("/api/servers", {
         name: values.name,
         imageUrl: fileUploadRes.url,
       });
-      console.log("serverRes", serverRes);
+      toast.success("Server created.");
       form.reset();
       if (fileInputRef.current) fileInputRef.current.value = "";
       router.refresh();
@@ -110,7 +111,13 @@ export const CreateServerModal = () => {
               className="mt-4 flex flex-col"
               onSubmit={form.handleSubmit(onSubmit)}
             >
-              <Avatar className="mx-auto mb-4 h-24 w-24 sm:h-32 sm:w-32" />
+              <Avatar
+                src={
+                  form.getValues("images") &&
+                  URL.createObjectURL(form.getValues("images"))
+                }
+                className="mx-auto mb-4 h-24 w-24 sm:h-32 sm:w-32"
+              />
               <FormField
                 control={form.control}
                 name="images"
@@ -152,6 +159,7 @@ export const CreateServerModal = () => {
                 )}
               />
               <button
+                disabled={isLoading}
                 type="submit"
                 className="daisy-btn daisy-btn-primary daisy-btn-sm ml-auto mt-6 w-40 sm:daisy-btn-md"
               >

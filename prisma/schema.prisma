@@ -1,6 +1,6 @@
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider     = "mongodb"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
@@ -8,65 +8,54 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 model Profile {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @unique
-  name String
-  imageUrl String @db.String
-  email String @db.String
-  username String @db.String
-
-  servers Server[]
-  members Member[]
-  channels Channel[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                     String           @id @default(auto()) @map("_id") @db.ObjectId
+  userId                 String           @unique
+  name                   String
+  imageUrl               String           @db.String
+  email                  String           @db.String
+  username               String           @db.String
+  servers                Server[]
+  members                Member[]
+  conversationsInitiated DirectMessages[] @relation("InitiatedProfile")
+  conversationsReceived  DirectMessages[] @relation("ReceivedProfile")
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
 }
 
 model Server {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  imageUrl String @db.String
-  inviteCode String @unique
-
-  profileId String @db.ObjectId
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-
-  members Member[]
-  channels Channel[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  imageUrl   String     @db.String
+  inviteCode String     @unique
+  profileId  String     @db.ObjectId
+  profile    Profile    @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  members    Member[]
+  categories Category[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
 
   @@index([profileId])
 }
 
 enum MemberRole {
-  ADMIN
+  OWNER
   MODERATOR
+  DEFAULT
   GUEST
 }
 
 model Member {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  role MemberRole @default(GUEST)
-
-  profileId String @db.ObjectId
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-
-  serverId String @db.ObjectId
-  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
-
-  // messages Message[]
-  // directMessages DirectMessage[]
-
-  // conversationsInitiated Conversation[] @relation("MemberOne")
-  // conversationsReceived Conversation[] @relation("MemberTwo")
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  role       MemberRole @default(GUEST)
+  profileId  String     @db.ObjectId
+  profile    Profile    @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  serverId   String     @db.ObjectId
+  server     Server     @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  categories Category[]
+  channels   Channel[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
 
   @@index([profileId])
   @@index([serverId])
@@ -74,26 +63,78 @@ model Member {
 
 enum ChannelType {
   TEXT
-  AUDIO
-  VIDEO
+  AUDIO_VIDEO
+}
+
+model Category {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  type      ChannelType @default(TEXT)
+  serverId  String      @db.ObjectId
+  server    Server      @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  memberId  String      @db.ObjectId
+  member    Member      @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  channel   Channel[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([memberId])
+  @@index([serverId])
 }
 
 model Channel {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  type ChannelType @default(TEXT)
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  type       ChannelType @default(TEXT)
+  categoryId String      @db.ObjectId
+  category   Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  memberId   String      @db.ObjectId
+  member     Member      @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  messages   Messages[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 
-  profileId String @db.ObjectId
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  @@index([memberId])
+  @@index([categoryId])
+}
 
-  serverId String @db.ObjectId
-  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+type Attachment {
+  id        String
+  name      String
+  url       String
+  type      String
+  size      BigInt
+  createdAt DateTime
+  updatedAt DateTime
+}
 
-  // messages Message[]
+model Messages {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  text       String
+  attachment Attachment[]
+  senderId   String       @db.ObjectId
+  channelId  String       @db.ObjectId
+  channel    Channel      @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  @@index([senderId])
+  @@index([channelId])
+}
 
-  @@index([profileId])
-  @@index([serverId])
+model DirectMessages {
+  id               String       @id @default(auto()) @map("_id") @db.ObjectId
+  text             String
+  attachment       Attachment[]
+  senderId         String       @db.ObjectId
+  initiatedId      String       @db.ObjectId
+  receivedId       String       @db.ObjectId
+  initiatedProfile Profile      @relation("InitiatedProfile", fields: [initiatedId], references: [id], onDelete: Cascade)
+  receivedProfile  Profile      @relation("ReceivedProfile", fields: [receivedId], references: [id], onDelete: Cascade)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@index([senderId])
+  @@index([receivedId])
+  @@index([initiatedId])
 }

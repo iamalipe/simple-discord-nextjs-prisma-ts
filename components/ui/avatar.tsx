@@ -18,7 +18,7 @@ export const Avatar = (props: AvatarProps) => {
         src={props.src}
         className="aspect-square h-full w-full"
       />
-      <RadixAvatar.Fallback className="flex h-full w-full items-center justify-center rounded-full bg-base-content text-base-300">
+      <RadixAvatar.Fallback className="flex h-full w-full items-center justify-center rounded-daisy-badge bg-base-content text-base-300">
         {props.fallbackString || "SD"}
       </RadixAvatar.Fallback>
     </RadixAvatar.Root>

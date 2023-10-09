@@ -23,7 +23,7 @@ export const ServerItem = ({ data }: ServerItemProps) => {
   const params = useParams();
   const router = useRouter();
   const onClick = () => {
-    router.push(`/servers/${id}`);
+    router.push(`/app/servers/${id}`);
   };
 
   const isAlert = false;

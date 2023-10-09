@@ -8,10 +8,12 @@ import { cn } from "@/lib/utils";
 
 export const ServerSelf = () => {
   const pathname = usePathname();
+  const router = useRouter();
 
   const isAlert = false;
+
   const onClick = () => {
-    // router.push(`/servers/${id}`);
+    router.push(`/app`);
   };
 
   return (
@@ -21,15 +23,15 @@ export const ServerSelf = () => {
           className={cn(
             "h-0 w-[4px] rounded-full bg-base-content transition-all",
             isAlert && "h-[8px]",
-            pathname !== "/" && "group-hover:h-[20px]",
-            pathname === "/" && "h-[32px]",
+            pathname !== "/app" && "group-hover:h-[20px]",
+            pathname === "/app" && "h-[32px]",
           )}
         />
         <Tooltip.Trigger
           onClick={onClick}
           className={cn(
             "group relative ml-2 flex h-[48px] w-[48px] items-center justify-center overflow-hidden rounded-[24px] bg-base-content/50 text-base-300 transition-all group-hover:rounded-[16px] group-hover:bg-primary group-hover:text-primary-content",
-            pathname === "/" && "rounded-[16px]",
+            pathname === "/app" && "rounded-[16px]",
           )}
         >
           <PercentSquare />

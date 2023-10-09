@@ -1,31 +1,23 @@
-import { redirect } from "next/navigation";
+"use client";
 
-import { currentProfile } from "@/lib/current-profile";
 import ProfileBar from "@/components/profile-bar/profile-bar";
-import { db } from "@/lib/db";
-import { DirectMessagesItem } from ".";
+import { DirectMessagesItem } from "./direct-messages-item";
+import axios from "axios";
 
-export const DirectMessages = async () => {
-  const profile = await currentProfile();
-
-  if (!profile) {
-    return redirect("/");
-  }
-
-  // const servers = await db.server.findMany({
-  //   where: {
-  //     members: {
-  //       some: {
-  //         profileId: profile.id,
-  //       },
-  //     },
-  //   },
-  // });
+export const DirectMessages = () => {
+  const onStartConversation = async () => {
+    console.log("onStartConversation");
+    const res = await axios.post("/api/test");
+    console.log(res.data);
+  };
 
   return (
-    <div className="flex h-full flex-1 flex-col overflow-hidden border-x border-l-base-100 border-r-base-300 bg-base-200">
+    <div className="flex h-full w-[280px] flex-none flex-col overflow-hidden border-x border-l-base-100 border-r-base-300 bg-base-200">
       <div className="mb-1 h-12 border-b border-b-base-content/50 p-2">
-        <button className="h-full w-full rounded-daisy-btn bg-base-content/25 text-center text-sm text-base-content hover:bg-base-content/40">
+        <button
+          onClick={onStartConversation}
+          className="h-full w-full rounded-daisy-btn bg-base-content/25 text-center text-sm text-base-content hover:bg-base-content/40"
+        >
           Find or start a conversation
         </button>
       </div>
@@ -49,7 +41,9 @@ export const DirectMessages = async () => {
       <DirectMessagesItem />
       <DirectMessagesItem />
       {/* </ScrollArea> */}
-      <ProfileBar />
+      {/* <ProfileBar /> */}
     </div>
   );
 };
+
+export default DirectMessages;

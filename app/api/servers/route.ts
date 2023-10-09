@@ -17,15 +17,48 @@ export async function POST(req: Request) {
     const server = await db.server.create({
       data: {
         profileId: profile.id,
-        name,
-        imageUrl,
+        name: name,
+        imageUrl: imageUrl,
         inviteCode: uuidv4(),
-        channels: {
-          create: [{ name: "general", profileId: profile.id }],
-        },
-        members: {
-          create: [{ profileId: profile.id, role: MemberRole.ADMIN }],
-        },
+      },
+    });
+    const member = await db.member.create({
+      data: {
+        role: "OWNER",
+        profileId: profile.id,
+        serverId: server.id,
+      },
+    });
+    const categoryText = await db.category.create({
+      data: {
+        name: "Text Channels",
+        type: "TEXT",
+        memberId: member.id,
+        serverId: server.id,
+      },
+    });
+    await db.channel.create({
+      data: {
+        name: "General",
+        categoryId: categoryText.id,
+        memberId: member.id,
+        type: "TEXT",
+      },
+    });
+    const categoryVoice = await db.category.create({
+      data: {
+        name: "Voice Channels",
+        type: "AUDIO_VIDEO",
+        memberId: member.id,
+        serverId: server.id,
+      },
+    });
+    await db.channel.create({
+      data: {
+        name: "General",
+        categoryId: categoryVoice.id,
+        memberId: member.id,
+        type: "AUDIO_VIDEO",
       },
     });
 
