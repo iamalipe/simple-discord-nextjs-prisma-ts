@@ -6,7 +6,11 @@ import { ClerkProvider } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
 import { Footer } from "@/components/footer";
-import { RedixProvider, ToastProvider } from "@/components/provider";
+import {
+  RedixProvider,
+  SocketProvider,
+  ToastProvider,
+} from "@/components/provider";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -25,11 +29,13 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={cn(font.className, "flex flex-col overflow-hidden")}>
-          <RedixProvider>
-            {children}
-            <Footer />
-          </RedixProvider>
-          <ToastProvider />
+          <SocketProvider>
+            <RedixProvider>
+              {children}
+              <Footer />
+            </RedixProvider>
+            <ToastProvider />
+          </SocketProvider>
         </body>
       </html>
     </ClerkProvider>

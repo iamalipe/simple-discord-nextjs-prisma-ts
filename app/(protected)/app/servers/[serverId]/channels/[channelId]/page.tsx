@@ -3,6 +3,7 @@ import { redirectToSignIn } from "@clerk/nextjs";
 
 import { ChannelsAside } from "@/components/channels-aside";
 import { db } from "@/lib/db";
+import { MessagePanel } from "@/components/message-panel";
 
 interface ChannelPageProps {
   params: {
@@ -19,7 +20,7 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
 
   return (
     <>
-      <div className="flex-1 bg-red-800">ChannelPage</div>
+      <MessagePanel channelId={params.channelId} />
     </>
   );
 };

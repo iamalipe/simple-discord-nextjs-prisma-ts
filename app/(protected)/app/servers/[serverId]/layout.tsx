@@ -5,6 +5,7 @@ import { ServersNav } from "@/components/servers-nav";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { Channel, ChannelType } from "@prisma/client";
+import { MemberList } from "@/components/member-list";
 
 export interface ChannelLayoutProps {
   children: React.ReactNode;
@@ -39,7 +40,7 @@ const ServerLayout = async ({ children, params }: ChannelLayoutProps) => {
     <>
       <ChannelsAside Category={server?.categories} />
       {children}
-      <div className="w-[240px] flex-none bg-blue-800">Members</div>
+      <MemberList />
     </>
   );
 };

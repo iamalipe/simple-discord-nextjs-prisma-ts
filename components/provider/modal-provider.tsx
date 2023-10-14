@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CreateChannelModal, CreateServerModal } from "@/components/modals";
+import {
+  CreateChannelModal,
+  CreateServerModal,
+  TabModal,
+} from "@/components/modals";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -16,6 +20,7 @@ export const ModalProvider = () => {
 
   return (
     <>
+      <TabModal />
       <CreateServerModal />
       <CreateChannelModal />
     </>
