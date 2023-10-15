@@ -77,7 +77,7 @@ export const CreateChannelModal = () => {
             <X className="h-4 w-4" />
           </Dialog.Close>
           <div>
-            <Dialog.Title className="text-2xl font-bold">
+            <Dialog.Title className="text-lg font-bold">
               Create Channel
             </Dialog.Title>
             <span>in {data?.category?.name}</span>
@@ -105,7 +105,7 @@ export const CreateChannelModal = () => {
                         >
                           <Hash size={28} className="flex-none" />
                           <div className="flex flex-1 select-none flex-col">
-                            <span className="text-lg font-bold">Text</span>
+                            <span className="text-base font-bold">Text</span>
                             <span className="text-xs">
                               Send messages, images, GIFs, emoji, opinions, puns
                             </span>
@@ -131,7 +131,7 @@ export const CreateChannelModal = () => {
                         >
                           <Volume1 size={28} className="flex-none" />
                           <div className="flex flex-1 select-none flex-col">
-                            <span className="text-lg font-bold">Voice</span>
+                            <span className="text-base font-bold">Voice</span>
                             <span className="text-xs">
                               Hang out together with voice, video and screen
                               share

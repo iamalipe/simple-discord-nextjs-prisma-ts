@@ -25,7 +25,7 @@ export const ChannelContent = ({ channel }: ChannelContentProps) => {
     <div
       className={cn([
         "group mx-1 flex h-[34px] cursor-pointer items-center gap-[1px] overflow-hidden rounded-daisy-btn pr-1 text-base-content",
-        channel.id === params.channelId && "bg-base-content/25",
+        channel.id === params?.channelId && "bg-base-content/25",
       ])}
     >
       {channel.type === ChannelType.TEXT && (

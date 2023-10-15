@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { nanoid } from "nanoid";
 import { NextResponse } from "next/server";
 import { MemberRole } from "@prisma/client";
 
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
         profileId: profile.id,
         name: name,
         imageUrl: imageUrl,
-        inviteCode: uuidv4(),
+        inviteCode: nanoid(),
       },
     });
     const member = await db.member.create({

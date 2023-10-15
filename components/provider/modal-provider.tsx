@@ -5,6 +5,7 @@ import {
   CreateChannelModal,
   CreateServerModal,
   TabModal,
+  InviteModal,
 } from "@/components/modals";
 
 export const ModalProvider = () => {
@@ -20,6 +21,7 @@ export const ModalProvider = () => {
 
   return (
     <>
+      <InviteModal />
       <TabModal />
       <CreateServerModal />
       <CreateChannelModal />

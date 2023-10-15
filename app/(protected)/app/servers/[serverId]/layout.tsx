@@ -1,11 +1,12 @@
 import { redirectToSignIn } from "@clerk/nextjs";
 
-import { ChannelsAside } from "@/components/channels-aside";
+import { ChannelsAside } from "@/components/channels-aside/channels-aside";
 import { ServersNav } from "@/components/servers-nav";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { Channel, ChannelType } from "@prisma/client";
 import { MemberList } from "@/components/member-list";
+import { ServerWithCategoriesAndChannel } from "@/types";
 
 export interface ChannelLayoutProps {
   children: React.ReactNode;
@@ -27,7 +28,11 @@ const ServerLayout = async ({ children, params }: ChannelLayoutProps) => {
       id: params.serverId,
     },
     include: {
-      members: true,
+      members: {
+        include: {
+          profile: true,
+        },
+      },
       categories: {
         include: {
           channel: true,
@@ -38,9 +43,9 @@ const ServerLayout = async ({ children, params }: ChannelLayoutProps) => {
 
   return (
     <>
-      <ChannelsAside Category={server?.categories} />
+      <ChannelsAside server={server} />
       {children}
-      <MemberList />
+      <MemberList myProfile={profile} server={server} />
     </>
   );
 };

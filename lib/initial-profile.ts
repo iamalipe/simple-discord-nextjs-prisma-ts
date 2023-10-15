@@ -1,8 +1,9 @@
 import { currentUser, redirectToSignIn } from "@clerk/nextjs";
 
 import { db } from "@/lib/db";
+import { Profile } from "@prisma/client";
 
-export const initialProfile = async () => {
+export const initialProfile: () => Promise<Profile> = async () => {
   const user = await currentUser();
 
   if (!user) {
