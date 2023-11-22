@@ -10,7 +10,8 @@ import {
   RedixProvider,
   SocketProvider,
   ToastProvider,
-} from "@/components/provider";
+} from "@/components/providers";
+import { QueryProvider } from "@/components/providers/query-provider";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -31,7 +32,7 @@ export default function RootLayout({
         <body className={cn(font.className, "flex flex-col overflow-hidden")}>
           <SocketProvider>
             <RedixProvider>
-              {children}
+              <QueryProvider>{children}</QueryProvider>
               <Footer />
             </RedixProvider>
             <ToastProvider />

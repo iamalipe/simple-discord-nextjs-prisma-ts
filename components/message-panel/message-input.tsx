@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import { Laugh, PlusCircle } from "lucide-react";
+import queryString from "query-string";
 import { useRef, useState } from "react";
 
 const LIMIT = 120; // height limit in px
@@ -25,11 +26,22 @@ export const MessageInput = (props: MessageInputProps) => {
   };
 
   const onMessageSend = async () => {
-    await axios.post("/api/messages", {
-      channelId,
-      text: inputValue,
+    const apiUrl = queryString.stringifyUrl({
+      url: "/api/socket/messages",
+      query: {
+        channelId: channelId,
+      },
+    });
+
+    const res = await axios.post(apiUrl, {
+      content: inputValue,
       attachment: [],
     });
+    console.log(res.data);
+  };
+
+  const onMessageSend2 = async () => {
+    console.log("Hello World");
   };
 
   return (
@@ -48,7 +60,7 @@ export const MessageInput = (props: MessageInputProps) => {
       <button onClick={onMessageSend} className="flex-none py-2">
         GIF
       </button>
-      <button className="flex-none py-2">
+      <button onClick={onMessageSend2} className="flex-none py-2">
         <Laugh />
       </button>
     </div>

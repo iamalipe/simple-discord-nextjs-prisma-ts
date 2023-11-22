@@ -4,7 +4,7 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { Messages } from "@prisma/client";
 
-const MESSAGES_BATCH = 10;
+const MESSAGES_BATCH = 5;
 
 export async function GET(req: Request) {
   try {
@@ -82,38 +82,3 @@ export async function GET(req: Request) {
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
-// export async function POST(req: Request) {
-//   try {
-//     const { text, channelId, attachment } = await req.json();
-//     const profile = await currentProfile();
-
-//     if (!profile) {
-//       return new NextResponse("Unauthorized", { status: 401 });
-//     }
-
-//     const member = await db.member.findFirst({
-//       where: {
-//         channels: {
-//           some: {
-//             id: channelId,
-//           },
-//         },
-//         profileId: profile.id,
-//       },
-//     });
-
-//     const messages = await db.messages.create({
-//       data: {
-//         text: text,
-//         senderId: member?.id || profile.id,
-//         channelId: channelId,
-//         attachment: attachment,
-//       },
-//     });
-
-//     return NextResponse.json(messages);
-//   } catch (error) {
-//     console.log("[SERVERS_POST]", error);
-//     return new NextResponse("Internal Error", { status: 500 });
-//   }
-// }

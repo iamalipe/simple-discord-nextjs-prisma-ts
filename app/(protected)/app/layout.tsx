@@ -1,4 +1,4 @@
-import { ModalProvider } from "@/components/provider/modal-provider";
+import { ModalProvider } from "@/components/providers/modal-provider";
 import { ServersNav } from "@/components/servers-nav";
 
 import { initialProfile } from "@/lib/initial-profile";

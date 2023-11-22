@@ -8,7 +8,7 @@ import Image from "next/image";
 // import { Avatar } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/hooks/use-theme-store";
-import { useSocket } from "@/components/provider";
+import { useSocket } from "@/components/providers";
 
 const THEME_NAME = [
   "light",

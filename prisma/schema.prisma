@@ -21,6 +21,7 @@ model Profile {
   conversationsReceived  DirectMessages[] @relation("ReceivedProfile")
   createdAt              DateTime         @default(now())
   updatedAt              DateTime         @updatedAt
+  Messages               Messages[]
 }
 
 model Server {
@@ -109,14 +110,15 @@ type Attachment {
 }
 
 model Messages {
-  id         String       @id @default(auto()) @map("_id") @db.ObjectId
-  text       String
-  attachment Attachment[]
-  senderId   String       @db.ObjectId
-  channelId  String       @db.ObjectId
-  channel    Channel      @relation(fields: [channelId], references: [id], onDelete: Cascade)
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  text          String
+  attachment    Attachment[]
+  senderId      String       @db.ObjectId
+  senderProfile Profile      @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  channelId     String       @db.ObjectId
+  channel       Channel      @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 
   @@index([senderId])
   @@index([channelId])
